@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yotrixx — Design. Visualize. Build Your Future.</title>
+<meta name="description" content="Next-generation learning platform for SketchUp, Lumion, Architecture, Interior Design & Construction. Turn ideas into stunning visuals.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════ RESET & ROOT ═══════ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:       #080810;
+  --bg2:      #0e0e1a;
+  --bg3:      #141425;
+  --card:     #12121e;
+  --card2:    #1a1a2e;
+  --mint:     #6affc4;
+  --mint-dk:  #3dd4a0;
+  --mint-glow:rgba(106,255,196,0.18);
+  --coral:    #ff6b6b;
+  --gold:     #ffd166;
+  --purple:   #b48aff;
+  --white:    #f4f4ff;
+  --muted:    #7070a0;
+  --border:   rgba(106,255,196,0.12);
+  --border2:  rgba(255,255,255,0.06);
+  --FD:"Syne",sans-serif;
+  --FB:"Plus Jakarta Sans",sans-serif;
+  --FM:"DM Mono",monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--FB);font-weight:300;overflow-x:hidden;cursor:none}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+/* ═══════ CUSTOM CURSOR ═══════ */
+#cdot{width:6px;height:6px;background:var(--mint);border-radius:50%;position:fixed;transform:translate(-50%,-50%);z-index:9999;pointer-events:none;transition:width .18s,height .18s,background .25s}
+#cring{width:36px;height:36px;border:1px solid var(--mint);border-radius:50%;position:fixed;transform:translate(-50%,-50%);z-index:9998;pointer-events:none;opacity:0.6;transition:width .32s cubic-bezier(.25,.46,.45,.94),height .32s,opacity .3s,border-color .3s}
+#cring.hov{width:56px;height:56px;opacity:1;border-color:var(--mint);background:var(--mint-glow)}
+@media(hover:none){#cdot,#cring{display:none}body{cursor:auto}}
+
+/* ═══════ NOISE GRAIN ═══════ */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:9990;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
+
+/* ═══════ LOADER ═══════ */
+#loader{position:fixed;inset:0;background:var(--bg);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .9s ease,visibility .9s ease}
+#loader.out{opacity:0;visibility:hidden;pointer-events:none}
+.l-logo{font-family:var(--FD);font-size:clamp(52px,10vw,100px);font-weight:800;letter-spacing:-.04em;color:var(--white);position:relative}
+.l-logo span{color:var(--mint)}
+.l-tag{font-family:var(--FM);font-size:9px;letter-spacing:.6em;text-transform:uppercase;color:var(--muted);opacity:0;animation:lFade 1s ease 1.4s forwards}
+.l-bar{width:200px;height:1px;background:rgba(255,255,255,.06);overflow:hidden;margin-top:8px}
+.l-prog{height:100%;background:linear-gradient(90deg,var(--mint),var(--purple));width:0;animation:lP 2.2s cubic-bezier(.76,0,.24,1) forwards}
+.l-logo .l-ch{display:inline-block;opacity:0;animation:lUp .7s cubic-bezier(.76,0,.24,1) forwards;animation-delay:calc(var(--i)*.06s)}
+@keyframes lUp{from{transform:translateY(80%) scaleY(1.2);opacity:0}to{transform:translateY(0) scaleY(1);opacity:1}}
+@keyframes lFade{from{opacity:0;letter-spacing:.9em}to{opacity:1;letter-spacing:.6em}}
+@keyframes lP{from{width:0}to{width:100%}}
+
+/* ═══════ NAV ═══════ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:22px 64px;display:flex;align-items:center;justify-content:space-between;transition:all .4s}
+#nav.stk{background:rgba(8,8,16,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding:14px 64px;border-bottom:1px solid var(--border2)}
+.n-brand{display:flex;align-items:center;gap:10px}
+.n-logo{font-family:var(--FD);font-size:22px;font-weight:800;letter-spacing:-.03em;color:var(--white)}
+.n-logo span{color:var(--mint)}
+.n-badge{font-family:var(--FM);font-size:7.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--mint);background:var(--mint-glow);border:1px solid var(--border);padding:3px 8px;border-radius:20px}
+.nav-ul{display:flex;gap:32px;list-style:none}
+.nav-ul a{font-size:12px;letter-spacing:.06em;color:var(--muted);font-weight:400;transition:color .3s;position:relative}
+.nav-ul a::after{content:"";position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--mint);transition:width .3s}
+.nav-ul a:hover{color:var(--white)}
+.nav-ul a:hover::after{width:100%}
+.n-cta{background:var(--mint);color:var(--bg);padding:10px 24px;font-family:var(--FD);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:4px;transition:all .3s}
+.n-cta:hover{background:var(--mint-dk);transform:translateY(-2px);box-shadow:0 8px 28px var(--mint-glow)}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.ham span{display:block;width:22px;height:1.5px;background:var(--white);transition:all .35s}
+.ham.o span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.ham.o span:nth-child(2){opacity:0}
+.ham.o span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mob-menu{position:fixed;inset:0;background:var(--bg2);z-index:490;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;opacity:0;pointer-events:none;transition:opacity .4s}
+.mob-menu.o{opacity:1;pointer-events:all}
+.mob-menu a{font-family:var(--FD);font-size:clamp(28px,8vw,52px);font-weight:700;color:var(--white);transition:color .3s}
+.mob-menu a:hover{color:var(--mint)}
+.mob-menu .m-btn{font-size:14px;background:var(--mint);color:var(--bg);padding:14px 40px;border-radius:4px;font-family:var(--FD);font-weight:700}
+
+/* ═══════ HERO ═══════ */
+.hero{height:100vh;min-height:640px;position:relative;overflow:hidden;display:flex;align-items:center}
+#heroCanvas{position:absolute;inset:0;z-index:0}
+.hero-grid-overlay{position:absolute;inset:0;z-index:1;background-image:linear-gradient(rgba(106,255,196,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(106,255,196,.04) 1px,transparent 1px);background-size:60px 60px}
+.hero-vignette{position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at 50% 50%,transparent 40%,var(--bg) 100%)}
+.hero-vignette2{position:absolute;bottom:0;left:0;right:0;height:200px;z-index:2;background:linear-gradient(transparent,var(--bg))}
+.hero-content{position:relative;z-index:3;padding:0 64px;max-width:900px}
+.h-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--FM);font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--mint);margin-bottom:28px;opacity:0;animation:fadeUp .8s ease 2.8s forwards}
+.h-tag::before{content:"";width:32px;height:1px;background:var(--mint)}
+.h-title{font-family:var(--FD);font-size:clamp(48px,7.5vw,100px);font-weight:800;line-height:.92;letter-spacing:-.04em;color:var(--white);margin-bottom:28px;opacity:0;animation:fadeUp .9s ease 3s forwards}
+.h-title .hl{color:var(--mint);position:relative;display:inline-block}
+.h-title .hl::after{content:"";position:absolute;bottom:4px;left:0;right:0;height:3px;background:var(--mint);opacity:0.4;border-radius:2px}
+.h-sub{font-size:15px;line-height:1.8;color:rgba(244,244,255,.5);max-width:520px;margin-bottom:48px;opacity:0;animation:fadeUp .8s ease 3.2s forwards;font-weight:300}
+.h-actions{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s ease 3.4s forwards}
+.btn-mint{background:var(--mint);color:var(--bg);padding:15px 40px;font-family:var(--FD);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:4px;transition:all .35s;display:inline-block}
+.btn-mint:hover{background:var(--mint-dk);transform:translateY(-3px);box-shadow:0 16px 40px var(--mint-glow)}
+.btn-outline{background:transparent;color:var(--white);padding:15px 40px;font-family:var(--FD);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(255,255,255,.15);border-radius:4px;transition:all .35s;display:inline-block}
+.btn-outline:hover{border-color:var(--mint);color:var(--mint);transform:translateY(-3px)}
+/* Floating badges */
+.h-badges{position:absolute;right:64px;top:50%;transform:translateY(-50%);z-index:3;display:flex;flex-direction:column;gap:12px;opacity:0;animation:fadeUp .8s ease 3.6s forwards}
+.hb{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(12px);transition:transform .3s,border-color .3s}
+.hb:hover{transform:translateX(-6px);border-color:var(--mint)}
+.hb-ico{font-size:22px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(106,255,196,.08)}
+.hb-t{font-family:var(--FD);font-size:13px;font-weight:700;color:var(--white)}
+.hb-s{font-family:var(--FM);font-size:9px;color:var(--muted);letter-spacing:.06em}
+.h-scroll-ind{position:absolute;bottom:36px;left:64px;z-index:3;display:flex;align-items:center;gap:10px;opacity:0;animation:fadeUp .8s ease 4.2s forwards}
+.h-scroll-ind span{font-family:var(--FM);font-size:8px;letter-spacing:.5em;text-transform:uppercase;color:rgba(244,244,255,.25)}
+.scroll-line{width:48px;height:1px;background:linear-gradient(to right,var(--mint),transparent);animation:sPulse 2s ease infinite}
+@keyframes sPulse{0%,100%{opacity:.3;width:48px}50%{opacity:1;width:72px}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══════ STATS ═══════ */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2)}
+.st{padding:48px 28px;border-right:1px solid var(--border2);text-align:center;position:relative;overflow:hidden;transition:background .4s}
+.st:last-child{border-right:none}
+.st::before{content:"";position:absolute;inset:0;background:var(--mint-glow);opacity:0;transition:opacity .4s}
+.st:hover::before{opacity:1}
+.st-num{font-family:var(--FD);font-size:clamp(36px,4.5vw,56px);font-weight:800;color:var(--mint);letter-spacing:-.04em;line-height:1}
+.st-label{font-family:var(--FM);font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+/* ═══════ SECTION COMMONS ═══════ */
+.sec-tag{font-family:var(--FM);font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--mint);display:inline-flex;align-items:center;gap:10px;margin-bottom:20px}
+.sec-tag::before{content:"";width:24px;height:1px;background:var(--mint)}
+.sec-title{font-family:var(--FD);font-size:clamp(32px,5vw,64px);font-weight:800;line-height:.95;letter-spacing:-.04em;color:var(--white)}
+.sec-title em{color:var(--mint);font-style:italic}
+.sec-body{font-size:15px;line-height:1.85;color:rgba(244,244,255,.45);font-weight:300;max-width:560px}
+
+/* ═══════ COURSES ═══════ */
+.courses{padding:120px 64px;background:var(--bg)}
+.courses-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;flex-wrap:wrap;gap:24px}
+.courses-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+.course-card{background:var(--card);border:1px solid var(--border2);padding:48px 44px;position:relative;overflow:hidden;transition:border-color .4s,background .4s;cursor:pointer;group}
+.course-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,var(--mint-glow),transparent 60%);opacity:0;transition:opacity .4s}
+.course-card:hover{border-color:var(--border);background:var(--card2)}
+.course-card:hover::before{opacity:1}
+.course-card:hover .cc-arrow{transform:translate(4px,-4px);color:var(--mint)}
+.cc-num{font-family:var(--FM);font-size:10px;letter-spacing:.4em;color:rgba(106,255,196,.3);margin-bottom:28px}
+.cc-icon{font-size:40px;margin-bottom:24px;display:block;width:70px;height:70px;display:flex;align-items:center;justify-content:center;border-radius:16px;background:rgba(106,255,196,.06);border:1px solid rgba(106,255,196,.1);transition:background .4s,border-color .4s}
+.course-card:hover .cc-icon{background:rgba(106,255,196,.12);border-color:rgba(106,255,196,.25)}
+.cc-title{font-family:var(--FD);font-size:26px;font-weight:700;color:var(--white);margin-bottom:12px;letter-spacing:-.02em}
+.cc-desc{font-size:13.5px;line-height:1.8;color:var(--muted);margin-bottom:28px;font-weight:300}
+.cc-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:32px}
+.cc-t{font-family:var(--FM);font-size:9px;letter-spacing:.06em;color:rgba(244,244,255,.4);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:4px 10px;border-radius:20px}
+.cc-link{display:inline-flex;align-items:center;gap:8px;font-family:var(--FD);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mint);position:relative;z-index:2}
+.cc-arrow{display:inline-block;transition:transform .3s,color .3s;font-size:16px}
+.cc-glow{position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;border-radius:50%;pointer-events:none;opacity:0;transition:opacity .5s}
+.course-card:nth-child(1) .cc-glow{background:radial-gradient(circle,rgba(106,255,196,.15),transparent 70%)}
+.course-card:nth-child(2) .cc-glow{background:radial-gradient(circle,rgba(180,138,255,.15),transparent 70%)}
+.course-card:nth-child(3) .cc-glow{background:radial-gradient(circle,rgba(255,107,107,.15),transparent 70%)}
+.course-card:nth-child(4) .cc-glow{background:radial-gradient(circle,rgba(255,209,102,.15),transparent 70%)}
+.course-card:hover .cc-glow{opacity:1}
+
+/* ═══════ WHY YOTRIXX ═══════ */
+.why{padding:120px 64px;background:var(--bg2)}
+.why-inner{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+.why-visual{position:relative}
+.why-big{font-family:var(--FD);font-size:clamp(80px,14vw,160px);font-weight:800;color:rgba(106,255,196,.04);line-height:1;letter-spacing:-.06em;position:absolute;top:-20px;left:-20px;pointer-events:none;user-select:none}
+.why-box{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:48px;position:relative;overflow:hidden}
+.why-box::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--mint),var(--purple))}
+.why-score{display:flex;align-items:baseline;gap:4px;margin-bottom:8px}
+.ws-num{font-family:var(--FD);font-size:80px;font-weight:800;color:var(--mint);line-height:1;letter-spacing:-.06em}
+.ws-unit{font-family:var(--FM);font-size:18px;color:var(--muted)}
+.why-score-lbl{font-size:13px;color:var(--muted);margin-bottom:36px}
+.why-dots{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:32px}
+.wdot{width:10px;height:10px;border-radius:2px;background:var(--mint);border-radius:50%}
+.wdot.off{background:rgba(255,255,255,.07)}
+.why-quote{font-family:var(--FD);font-size:18px;font-style:italic;color:rgba(244,244,255,.6);line-height:1.5;border-top:1px solid var(--border2);padding-top:24px}
+.why-r{display:flex;flex-direction:column;gap:8px}
+.why-items{display:flex;flex-direction:column;gap:6px;margin-top:40px}
+.wi{display:flex;gap:18px;padding:20px;border-radius:12px;border:1px solid transparent;transition:all .35s;cursor:default}
+.wi:hover{background:rgba(106,255,196,.04);border-color:var(--border)}
+.wi-ico{width:44px;height:44px;border-radius:10px;background:rgba(106,255,196,.08);border:1px solid rgba(106,255,196,.12);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:background .35s}
+.wi:hover .wi-ico{background:rgba(106,255,196,.15)}
+.wi-title{font-family:var(--FD);font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px}
+.wi-desc{font-size:13px;color:var(--muted);line-height:1.6;font-weight:300}
+
+/* ═══════ HOW IT WORKS ═══════ */
+.how{padding:120px 64px;background:var(--bg)}
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:64px}
+.step{padding:48px 40px;background:var(--card);border:1px solid var(--border2);position:relative;overflow:hidden;transition:background .4s,border-color .4s}
+.step:hover{background:var(--card2);border-color:var(--border)}
+.step::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--mint),transparent);opacity:0;transition:opacity .4s}
+.step:hover::before{opacity:1}
+.step-n{font-family:var(--FD);font-size:80px;font-weight:800;color:rgba(255,255,255,.03);line-height:1;position:absolute;top:24px;right:28px;letter-spacing:-.04em}
+.step-ico{font-size:32px;margin-bottom:28px}
+.step-title{font-family:var(--FD);font-size:22px;font-weight:700;color:var(--white);margin-bottom:12px;letter-spacing:-.02em}
+.step-desc{font-size:13.5px;line-height:1.8;color:var(--muted);font-weight:300}
+
+/* ═══════ TOOLS ═══════ */
+.tools{padding:80px 64px;background:var(--bg2);overflow:hidden}
+.tools-scroll{display:flex;gap:20px;margin-top:48px;animation:tScroll 24s linear infinite;width:max-content}
+.tools-scroll:hover{animation-play-state:paused}
+.tool-pill{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border2);border-radius:40px;padding:12px 24px;white-space:nowrap;transition:border-color .3s}
+.tool-pill:hover{border-color:var(--mint)}
+.tp-ico{font-size:18px}
+.tp-name{font-family:var(--FD);font-size:13px;font-weight:600;color:var(--white)}
+.tp-tag{font-family:var(--FM);font-size:8px;letter-spacing:.2em;color:var(--muted)}
+@keyframes tScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ═══════ TESTIMONIALS ═══════ */
+.testimonials{padding:120px 64px;background:var(--bg)}
+.t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:64px}
+.tcard{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:36px 32px;transition:border-color .4s,transform .4s}
+.tcard:hover{border-color:var(--border);transform:translateY(-6px)}
+.t-stars{display:flex;gap:3px;color:var(--gold);font-size:14px;margin-bottom:20px}
+.t-quote{font-size:14px;line-height:1.85;color:rgba(244,244,255,.6);font-weight:300;margin-bottom:28px;font-style:italic}
+.t-ava{display:flex;align-items:center;gap:12px;border-top:1px solid var(--border2);padding-top:20px}
+.t-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--FD);font-size:14px;font-weight:700;color:var(--bg);flex-shrink:0}
+.t-name{font-family:var(--FD);font-size:14px;font-weight:700;color:var(--white)}
+.t-role{font-family:var(--FM);font-size:9px;letter-spacing:.12em;color:var(--muted)}
+
+/* ═══════ MISSION / CTA / CONTACT FORM ═══════ */
+.cta{padding:160px 64px;background:var(--bg2);text-align:center;position:relative;overflow:hidden}
+.cta::before{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(106,255,196,.06),transparent 70%);pointer-events:none}
+.cta-pre{font-family:var(--FM);font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--mint);margin-bottom:24px}
+.cta-title{font-family:var(--FD);font-size:clamp(40px,7vw,88px);font-weight:800;letter-spacing:-.05em;line-height:.9;margin-bottom:28px;color:var(--white)}
+.cta-title em{color:var(--mint);font-style:italic}
+.cta-sub{font-size:15px;color:var(--muted);margin-bottom:52px;font-weight:300;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.8}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta-note{font-family:var(--FM);font-size:9px;letter-spacing:.2em;color:rgba(244,244,255,.2);margin-top:24px}
+
+/* Embedded Form Container */
+.form-container {
+  max-width: 760px;
+  margin: 80px auto 0;
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 50px rgba(0,0,0,0.5), 0 0 40px var(--mint-glow);
+  position: relative;
+  z-index: 10;
+}
+.form-container iframe {
+  width: 100%;
+  height: 1100px;
+  border: none;
+  display: block;
+  background: transparent;
+}
+
+/* ═══════ FOOTER ═══════ */
+footer{background:var(--bg);border-top:1px solid var(--border2);padding:80px 64px 40px}
+.ft-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:60px;margin-bottom:56px}
+.ft-brand{font-family:var(--FD);font-size:26px;font-weight:800;letter-spacing:-.04em;color:var(--white);margin-bottom:14px}
+.ft-brand span{color:var(--mint)}
+.ft-desc{font-size:13px;color:var(--muted);line-height:1.8;max-width:260px;margin-bottom:28px;font-weight:300}
+.ft-soc{display:flex;gap:8px}
+.fsa{width:36px;height:36px;border:1px solid var(--border2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);transition:all .3s;font-family:var(--FD);font-weight:700}
+.fsa:hover{border-color:var(--mint);color:var(--mint)}
+.ft-h{font-family:var(--FM);font-size:8px;letter-spacing:.5em;text-transform:uppercase;color:var(--mint);margin-bottom:20px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.ft-links a{font-size:13px;color:var(--muted);transition:color .3s;font-weight:300}
+.ft-links a:hover{color:var(--white)}
+.ft-bot{border-top:1px solid var(--border2);padding-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.ft-copy{font-size:11px;color:rgba(244,244,255,.2);font-family:var(--FM)}
+.ft-stamp{font-family:var(--FD);font-size:12px;color:rgba(106,255,196,.3);font-style:italic}
+
+/* ═══════ WA BTN ═══════ */
+.wa{position:fixed;bottom:30px;right:30px;z-index:400;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:transform .3s}
+.wa:hover{transform:scale(1.1)}
+.wa svg{width:24px;height:24px;fill:#fff}
+.wa-p{position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(37,211,102,.35);animation:waP 3s ease infinite}
+@keyframes waP{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.55);opacity:0}}
+#btt{position:fixed;bottom:92px;right:30px;z-index:400;width:42px;height:42px;border:1px solid var(--border2);background:var(--card2);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:all .35s;border-radius:6px;font-size:16px;color:var(--muted)}
+#btt.show{opacity:1;pointer-events:all}
+#btt:hover{border-color:var(--mint);color:var(--mint)}
+
+/* ═══════ REVEALS ═══════ */
+.rv{opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s ease}
+.rv.v{opacity:1;transform:translateY(0)}
+.rvl{opacity:0;transform:translateX(-36px);transition:opacity .9s ease,transform .9s ease}
+.rvl.v{opacity:1;transform:translateX(0)}
+.rvr{opacity:0;transform:translateX(36px);transition:opacity .9s ease,transform .9s ease}
+.rvr.v{opacity:1;transform:translateX(0)}
+
+/* ═══════ RESPONSIVE ═══════ */
+@media(max-width:1100px){
+  #nav{padding:16px 24px}#nav.stk{padding:12px 24px}
+  .nav-ul,.n-cta{display:none}.ham{display:flex}
+  .hero-content{padding:0 24px}
+  .h-badges{display:none}
+  .h-scroll-ind{left:24px}
+  .stats{grid-template-columns:1fr 1fr}
+  .st:nth-child(1),.st:nth-child(2){border-bottom:1px solid var(--border2)}
+  .st{border-right:none;padding:32px 16px}
+  .st:nth-child(odd){border-right:1px solid var(--border2)}
+  .courses{padding:80px 24px}
+  .courses-grid{grid-template-columns:1fr}
+  .why{padding:80px 24px}
+  .why-inner{grid-template-columns:1fr;gap:60px}
+  .why-big{display:none}
+  .how{padding:80px 24px}
+  .how-steps{grid-template-columns:1fr}
+  .tools{padding:60px 24px}
+  .testimonials{padding:80px 24px}
+  .t-grid{grid-template-columns:1fr}
+  .cta{padding:100px 24px}
+  footer{padding:60px 24px 32px}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:40px}
+  .courses-head{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:640px){
+  .ft-grid{grid-template-columns:1fr}
+  .h-title{font-size:clamp(40px,12vw,72px)}
+  .form-container iframe { height: 1350px; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<div id="cdot"></div>
+<div id="cring"></div>
+
+<div id="loader">
+  <div class="l-logo">
+    <span class="l-ch" style="--i:0">Y</span><span class="l-ch" style="--i:1">o</span><span class="l-ch" style="--i:2">t</span><span class="l-ch" style="--i:3">r</span><span class="l-ch" style="--i:4">i</span><span class="l-ch" style="--i:5">x</span><span class="l-ch" style="--i:6;color:var(--mint)">x</span>
+  </div>
+  <div class="l-tag">Design · Visualize · Build</div>
+  <div class="l-bar"><div class="l-prog"></div></div>
+</div>
+
+<nav id="nav">
+  <div class="n-brand">
+    <div class="n-logo">Yotri<span>xx</span></div>
+    <div class="n-badge">Beta</div>
+  </div>
+  <ul class="nav-ul">
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="n-cta">Start Learning</a>
+  <div class="ham" id="hamBtn">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mob-menu" id="mobMenu">
+  <a href="#courses" onclick="closeMob()">Courses</a>
+  <a href="#why" onclick="closeMob()">Why Us</a>
+  <a href="#how" onclick="closeMob()">How It Works</a>
+  <a href="#testimonials" onclick="closeMob()">Reviews</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+  <a href="#contact" class="m-btn" onclick="closeMob()">Start Learning →</a>
+</div>
+
+<section class="hero" id="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-vignette2"></div>
+
+  <div class="hero-content">
+    <div class="h-tag">Next-gen Design Education</div>
+    <h1 class="h-title">
+      Design.<br><span class="hl">Visualize.</span><br>Build Your<br>Future.
+    </h1>
+    <p class="h-sub">Master SketchUp, Lumion, Architecture & Interior Design with real-world projects — built for the next generation of creators.</p>
+    <div class="h-actions">
+      <a href="#contact" class="btn-mint">Explore Courses →</a>
+      <a href="#how" class="btn-outline">How It Works</a>
+    </div>
+  </div>
+
+  <div class="h-badges">
+    <div class="hb">
+      <div class="hb-ico">🧱</div>
+      <div>
+        <div class="hb-t">SketchUp Mastery</div>
+        <div class="hb-s">3D Modeling · Beginner to Pro</div>
+      </div>
+    </div>
+    <div class="hb">
+      <div class="hb-ico">🎬</div>
+      <div>
+        <div class="hb-t">Lumion Rendering</div>
+        <div class="hb-s">Cinematic · Photorealistic</div>
+      </div>
+    </div>
+    <div class="hb">
+      <div class="hb-ico">🏠</div>
+      <div>
+        <div class="hb-t">Interior Design</div>
+        <div class="hb-s">Concept to Execution</div>
+      </div>
+    </div>
+    <div class="hb">
+      <div class="hb-ico">🏗️</div>
+      <div>
+        <div class="hb-t">Construction Basics</div>
+        <div class="hb-s">Site · Structure · Practice</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="h-scroll-ind">
+    <div class="scroll-line"></div>
+    <span>Scroll down</span>
+  </div>
+</section>
+
+<section class="stats" id="stats">
+  <div class="st rv">
+    <div class="st-num" data-count="2000">0</div>
+    <div class="st-label">Students Enrolled</div>
+  </div>
+  <div class="st rv" style="transition-delay:.1s">
+    <div class="st-num" data-count="4">0</div>
+    <div class="st-label">Core Courses</div>
+  </div>
+  <div class="st rv" style="transition-delay:.2s">
+    <div class="st-num" data-count="98">0</div>
+    <div class="st-label">% Satisfaction Rate</div>
+  </div>
+  <div class="st rv" style="transition-delay:.3s">
+    <div class="st-num" data-count="100">0</div>
+    <div class="st-label">% Practical Projects</div>
+  </div>
+</section>
+
+<section class="courses" id="courses">
+  <div class="courses-head">
+    <div>
+      <div class="sec-tag rv">What We Offer</div>
+      <h2 class="sec-title rv" style="transition-delay:.1s">Level Up Your<br><em>Design Skills</em></h2>
+    </div>
+    <p class="sec-body rv" style="transition-delay:.2s">Practical, portfolio-ready courses designed for students and professionals who want real industry skills — not just theory.</p>
+  </div>
+
+  <div class="courses-grid">
+    <div class="course-card rv">
+      <div class="cc-num">01 / 04</div>
+      <div class="cc-icon">🧱</div>
+      <div class="cc-title">SketchUp Mastery</div>
+      <div class="cc-desc">Learn powerful 3D modeling using real project workflows. From your first cube to complete architectural models with plugins and automation.</div>
+      <div class="cc-tags">
+        <span class="cc-t">Beginner Friendly</span>
+        <span class="cc-t">Interior & Exterior</span>
+        <span class="cc-t">Plugins & Tips</span>
+        <span class="cc-t">Real Projects</span>
+      </div>
+      <a href="#contact" class="cc-link">Start Module <span class="cc-arrow">↗</span></a>
+      <div class="cc-glow"></div>
+    </div>
+
+    <div class="course-card rv" style="transition-delay:.1s">
+      <div class="cc-num">02 / 04</div>
+      <div class="cc-icon">🎬</div>
+      <div class="cc-title">Lumion Rendering</div>
+      <div class="cc-desc">Create ultra-realistic renders and cinematic walkthroughs that make your portfolio pop. Learn lighting, materials, environments, and animation.</div>
+      <div class="cc-tags">
+        <span class="cc-t">Photorealistic</span>
+        <span class="cc-t">Lighting & Materials</span>
+        <span class="cc-t">Walkthrough Animations</span>
+        <span class="cc-t">Portfolio Visuals</span>
+      </div>
+      <a href="#contact" class="cc-link">Start Module <span class="cc-arrow">↗</span></a>
+      <div class="cc-glow"></div>
+    </div>
+
+    <div class="course-card rv" style="transition-delay:.15s">
+      <div class="cc-num">03 / 04</div>
+      <div class="cc-icon">🏠</div>
+      <div class="cc-title">Architecture & Interior Design</div>
+      <div class="cc-desc">Understand design from concept to execution. Space planning, styling, layout, and residential project design — all from first principles.</div>
+      <div class="cc-tags">
+        <span class="cc-t">Space Planning</span>
+        <span class="cc-t">Interior Styling</span>
+        <span class="cc-t">Concept to Execution</span>
+        <span class="cc-t">Residential Projects</span>
+      </div>
+      <a href="#contact" class="cc-link">Start Module <span class="cc-arrow">↗</span></a>
+      <div class="cc-glow"></div>
+    </div>
+
+    <div class="course-card rv" style="transition-delay:.2s">
+      <div class="cc-num">04 / 04</div>
+      <div class="cc-icon">🏗️</div>
+      <div class="cc-title">Construction Knowledge</div>
+      <div class="cc-desc">Learn how designs become real structures. Understand sites, materials, and construction logic — the bridge between design and the real world.</div>
+      <div class="cc-tags">
+        <span class="cc-t">Construction Basics</span>
+        <span class="cc-t">Site Reading</span>
+        <span class="cc-t">Industry Insights</span>
+        <span class="cc-t">Practical Skills</span>
+      </div>
+      <a href="#contact" class="cc-link">Start Module <span class="cc-arrow">↗</span></a>
+      <div class="cc-glow"></div>
+    </div>
+  </div>
+</section>
+
+<section class="why" id="why">
+  <div class="why-inner">
+    <div class="why-visual rvl">
+      <div class="why-big">WHY</div>
+      <div class="why-box">
+        <div class="why-score">
+          <div class="ws-num" id="satNum">0</div>
+          <div class="ws-unit">%</div>
+        </div>
+        <div class="why-score-lbl">Learner satisfaction — students who said skills helped them get work</div>
+        <div class="why-dots" id="wdots"></div>
+        <div class="why-quote">"Finally a course that actually prepares you for the industry, not just theory." — Priya R., Interior Designer</div>
+      </div>
+    </div>
+
+    <div class="why-r rvr">
+      <div class="sec-tag">Why Yotrixx?</div>
+      <h2 class="sec-title">Real Skills.<br><em>Real Results.</em></h2>
+      <div class="why-items">
+        <div class="wi">
+          <div class="wi-ico">✨</div>
+          <div>
+            <div class="wi-title">Learn by Doing</div>
+            <div class="wi-desc">Every lesson revolves around real projects, not passive watching. You build a portfolio from day one.</div>
+          </div>
+        </div>
+        <div class="wi">
+          <div class="wi-ico">🚀</div>
+          <div>
+            <div class="wi-title">Beginner to Pro in One Path</div>
+            <div class="wi-desc">Whether you're starting out or upgrading, our structured curriculum meets you where you are.</div>
+          </div>
+        </div>
+        <div class="wi">
+          <div class="wi-ico">💸</div>
+          <div>
+            <div class="wi-title">Affordable & Value-Packed</div>
+            <div class="wi-desc">World-class design education without the world-class price tag. Accessible to every creator.</div>
+          </div>
+        </div>
+        <div class="wi">
+          <div class="wi-ico">⚡</div>
+          <div>
+            <div class="wi-title">Built for Gen Z</div>
+            <div class="wi-desc">Fast, focused, and visual. We skip the filler and get straight to what actually matters in the industry.</div>
+          </div>
+        </div>
+        <div class="wi">
+          <div class="wi-ico">🏆</div>
+          <div>
+            <div class="wi-title">Case Studies & Real Projects</div>
+            <div class="wi-desc">Our projects are inspired by actual design briefs so your portfolio is immediately relevant to clients and employers.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="sec-tag rv">The Process</div>
+  <h2 class="sec-title rv" style="transition-delay:.1s">How It <em>Works</em></h2>
+  <div class="how-steps">
+    <div class="step rv" style="transition-delay:.1s">
+      <div class="step-n">01</div>
+      <div class="step-ico">🎯</div>
+      <div class="step-title">Pick Your Course</div>
+      <div class="step-desc">Choose from SketchUp, Lumion, Architecture & Interior Design, or Construction. Each course is structured for progressive mastery with clear milestones.</div>
+    </div>
+    <div class="step rv" style="transition-delay:.2s">
+      <div class="step-n">02</div>
+      <div class="step-ico">🛠️</div>
+      <div class="step-title">Learn & Build</div>
+      <div class="step-desc">Follow guided lessons, apply skills on real project files, and get feedback at every stage. No passive watching — you're always creating something.</div>
+    </div>
+    <div class="step rv" style="transition-delay:.3s">
+      <div class="step-n">03</div>
+      <div class="step-ico">💼</div>
+      <div class="step-title">Launch Your Career</div>
+      <div class="step-desc">Graduate with a polished portfolio of real design projects that you can show clients, firms, and studios. Learn. Design. Earn.</div>
+    </div>
+  </div>
+</section>
+
+<section class="tools">
+  <div class="sec-tag rv">Tools You'll Master</div>
+  <div class="tools-scroll" id="toolsScroll">
+    <div class="tool-pill"><span class="tp-ico">🧱</span><div><div class="tp-name">SketchUp Pro</div><div class="tp-tag">3D Modeling</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">🎬</span><div><div class="tp-name">Lumion 12</div><div class="tp-tag">Rendering</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">📐</span><div><div class="tp-name">AutoCAD</div><div class="tp-tag">Drafting</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">🎨</span><div><div class="tp-name">V-Ray</div><div class="tp-tag">Visualization</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">🖼️</span><div><div class="tp-name">Photoshop</div><div class="tp-tag">Post-Processing</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">🌐</span><div><div class="tp-name">Revit Basics</div><div class="tp-tag">BIM</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">📊</span><div><div class="tp-name">Enscape</div><div class="tp-tag">Real-Time Render</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">✏️</span><div><div class="tp-name">Sketch & Ideation</div><div class="tp-tag">Concept</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">🧱</span><div><div class="tp-name">SketchUp Pro</div><div class="tp-tag">3D Modeling</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">🎬</span><div><div class="tp-name">Lumion 12</div><div class="tp-tag">Rendering</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">📐</span><div><div class="tp-name">AutoCAD</div><div class="tp-tag">Drafting</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">🎨</span><div><div class="tp-name">V-Ray</div><div class="tp-tag">Visualization</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">🖼️</span><div><div class="tp-name">Photoshop</div><div class="tp-tag">Post-Processing</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">🌐</span><div><div class="tp-name">Revit Basics</div><div class="tp-tag">BIM</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">📊</span><div><div class="tp-name">Enscape</div><div class="tp-tag">Real-Time Render</div></div></div>
+    <div class="tool-pill"><span class="tp-ico">✏️</span><div><div class="tp-name">Sketch & Ideation</div><div class="tp-tag">Concept</div></div></div>
+  </div>
+</section>
+
+<section class="testimonials" id="testimonials">
+  <div class="sec-tag rv">Student Reviews</div>
+  <h2 class="sec-title rv" style="transition-delay:.1s">What Our<br><em>Learners Say</em></h2>
+  <div class="t-grid">
+    <div class="tcard rv" style="transition-delay:.1s">
+      <div class="t-stars">★★★★★</div>
+      <div class="t-quote">"I went from zero SketchUp knowledge to landing my first freelance project within 2 months of completing the course. The real-project workflow is what made all the difference."</div>
+      <div class="t-ava">
+        <div class="t-av" style="background:var(--mint)">PR</div>
+        <div>
+          <div class="t-name">Priya Reddy</div>
+          <div class="t-role">Interior Designer · Bengaluru</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard rv" style="transition-delay:.2s">
+      <div class="t-stars">★★★★★</div>
+      <div class="t-quote">"Lumion rendering changed my entire portfolio. The way Yotrixx explains lighting and materials is super practical — clients literally can't tell it's a render anymore."</div>
+      <div class="t-ava">
+        <div class="t-av" style="background:var(--purple)">AM</div>
+        <div>
+          <div class="t-name">Arjun Mehta</div>
+          <div class="t-role">Architecture Student · Pune</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard rv" style="transition-delay:.3s">
+      <div class="t-stars">★★★★★</div>
+      <div class="t-quote">"The best part? It's actually affordable. Most design courses online cost a fortune. Yotrixx delivers the same quality at a fraction of the price. 100% worth it."</div>
+      <div class="t-ava">
+        <div class="t-av" style="background:var(--coral)">SK</div>
+        <div>
+          <div class="t-name">Sneha Kulkarni</div>
+          <div class="t-role">Design Professional · Mumbai</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="cta-pre rv">Enroll Now</div>
+  <h2 class="cta-title rv" style="transition-delay:.1s">
+    Learn.<br><em>Design.</em><br>Earn.
+  </h2>
+  <p class="cta-sub rv" style="transition-delay:.2s">Join Yotrixx and transform your creativity into skills that pay. Fill out the form below to get full course information, pricing, and enrollment guidance.</p>
+  
+  <div class="cta-btns rv" style="transition-delay:.3s">
+    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="btn-outline" style="border-color: var(--mint); color: var(--mint);">Chat on WhatsApp Instead</a>
+  </div>
+  <div class="cta-note rv" style="transition-delay:.4s">No prior experience needed · Beginner to Pro · Practical & Portfolio-Ready</div>
+
+  <div class="form-container rv" style="transition-delay:.5s">
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfAJb_3dlxUfBa-TWdWzSX-FVdtUiEKIRdO3BY8L7fVnRjiEQ/viewform?embedded=true" width="100%" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+  </div>
+
+</section>
+
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-brand">Yotri<span>xx</span></div>
+      <p class="ft-desc">Next-generation learning platform for SketchUp, Lumion, Architecture, Interior Design & Construction. Turn ideas into stunning visuals.</p>
+      <div class="ft-soc">
+        <a href="#" class="fsa">IG</a>
+        <a href="#" class="fsa">YT</a>
+        <a href="#" class="fsa">TW</a>
+        <a href="#" class="fsa">IN</a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-h">Platform</div>
+      <ul class="ft-links">
+        <li><a href="#courses">All Courses</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#why">Why Yotrixx</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact">Contact / Enroll</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-h">Courses</div>
+      <ul class="ft-links">
+        <li><a href="#courses">SketchUp Mastery</a></li>
+        <li><a href="#courses">Lumion Rendering</a></li>
+        <li><a href="#courses">Architecture & Interior</a></li>
+        <li><a href="#courses">Construction Knowledge</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-h">Connect</div>
+      <ul class="ft-links">
+        <li><a href="https://wa.me/91XXXXXXXXXX" target="_blank">WhatsApp</a></li>
+        <li><a href="mailto:hello@yotrixx.com">hello@yotrixx.com</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <div class="ft-copy">© 2026 Yotrixx. All rights reserved.</div>
+    <div class="ft-stamp">Design. Visualize. Build Your Future.</div>
+  </div>
+</footer>
+
+<a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="wa" aria-label="WhatsApp">
+  <div class="wa-p"></div>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+<div id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<script>
+'use strict';
+
+/* ─── LOADER ─── */
+window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('out'),2500));
+
+/* ─── CURSOR ─── */
+const cD=document.getElementById('cdot'),cR=document.getElementById('cring');
+let mx=0,my=0,rx=0,ry=0;
+if(window.matchMedia('(hover:hover)').matches){
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cD.style.left=mx+'px';cD.style.top=my+'px'});
+  (function raf(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;cR.style.left=rx+'px';cR.style.top=ry+'px';requestAnimationFrame(raf)})();
+  document.querySelectorAll('a,button,.course-card,.wi,.tcard,.hb').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cR.classList.add('hov'));
+    el.addEventListener('mouseleave',()=>cR.classList.remove('hov'));
+  });
+}
+
+/* ─── NAV ─── */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('stk',window.scrollY>60);
+  document.getElementById('btt').classList.toggle('show',window.scrollY>300);
+});
+
+/* ─── MOBILE MENU ─── */
+const ham=document.getElementById('hamBtn'),mob=document.getElementById('mobMenu');
+ham.addEventListener('click',()=>{ham.classList.toggle('o');mob.classList.toggle('o')});
+function closeMob(){ham.classList.remove('o');mob.classList.remove('o')}
+
+/* ─── HERO CANVAS (Particle Field) ─── */
+(function(){
+  const canvas=document.getElementById('heroCanvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,particles=[];
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight}
+  resize();
+  window.addEventListener('resize',resize);
+  class P{
+    constructor(){this.reset()}
+    reset(){
+      this.x=Math.random()*W;
+      this.y=Math.random()*H;
+      this.vx=(Math.random()-.5)*.4;
+      this.vy=(Math.random()-.5)*.4;
+      this.r=Math.random()*1.5+.3;
+      this.a=Math.random()*.5+.1;
+    }
+    update(){
+      this.x+=this.vx;this.y+=this.vy;
+      if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();
+    }
+    draw(){
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(106,255,196,${this.a})`;
+      ctx.fill();
+    }
+  }
+  for(let i=0;i<100;i++)particles.push(new P());
+  // connection lines
+  function connections(){
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x;
+        const dy=particles[i].y-particles[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(106,255,196,${.12*(1-d/120)})`;
+          ctx.lineWidth=.6;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{p.update();p.draw()});
+    connections();
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ─── SCROLL REVEAL ─── */
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target)}});
+},{threshold:.12});
+document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>obs.observe(el));
+
+/* ─── COUNTER ANIMATION ─── */
+function animCount(el,target,suffix){
+  const dur=1800,step=16;
+  let cur=0,start=null;
+  function frame(ts){
+    if(!start)start=ts;
+    const prog=Math.min((ts-start)/dur,1);
+    cur=Math.round(prog*target);
+    el.textContent=cur+(suffix||'');
+    if(prog<1)requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+const statsObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      document.querySelectorAll('[data-count]').forEach(el=>{
+        animCount(el,+el.dataset.count,'');
+      });
+      statsObs.disconnect();
+    }
+  });
+},{threshold:.3});
+const statsEl=document.querySelector('.stats');
+if(statsEl)statsObs.observe(statsEl);
+
+/* ─── WHY SAT COUNTER ─── */
+const satObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      animCount(document.getElementById('satNum'),98,'');
+      // dots
+      const dc=document.getElementById('wdots');
+      dc.innerHTML='';
+      for(let i=0;i<20;i++){
+        const d=document.createElement('div');
+        d.className='wdot'+(i>=19?' off':'');
+        dc.appendChild(d);
+      }
+      satObs.disconnect();
+    }
+  });
+},{threshold:.3});
+const whyEl=document.querySelector('.why');
+if(whyEl)satObs.observe(whyEl);
+</script>
+</body>
+</html>
+```
