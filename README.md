@@ -22,10 +22,141 @@ A modern, highly interactive landing page for **Yotrixx**, a next-generation lea
 - **Scripting:** Vanilla JavaScript (ES6+, DOM Manipulation, Canvas API)
 - **Typography:** Google Fonts (Syne, Plus Jakarta Sans, DM Mono)
 
-## 🛠️ Getting Started
 
-Since this is a static front-end project, no complex build tools or package managers are required to run it locally.
+## 🌐 Live Concept
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/kirankumark-sec/yotrixx-web
+> *“Design. Visualize. Build Your Future.”*
+
+Yotrixx is built to showcase courses like:
+
+* SketchUp Mastery
+* Lumion Rendering
+* Architecture & Interior Design
+* Construction Knowledge
+
+---
+
+## ✨ Features
+
+### 🎨 UI/UX
+
+* Modern dark-themed design
+* Custom animated cursor
+* Smooth scrolling & transitions
+* Responsive design (mobile + desktop)
+
+### ⚡ Animations & Effects
+
+* Particle animation canvas (Hero section)
+* Scroll-based reveal animations
+* Counter animations (stats section)
+* Hover micro-interactions
+
+### 📚 Sections Included
+
+* Hero Section (with CTA)
+* Courses Grid
+* Why Yotrixx (value proposition)
+* How It Works (step-by-step flow)
+* Tools Showcase (scrolling marquee)
+* Testimonials
+* Contact / Enrollment Form (Google Forms integration)
+* Footer with navigation & social links
+
+### 📱 Interactivity
+
+* Mobile hamburger menu
+* Sticky navbar
+* Back-to-top button
+* WhatsApp floating action button
+
+---
+
+## 📂 Project Structure
+
+```
+yotrixx-web/
+│
+├── index.html        # Main website file
+├── assets/           # (Optional for images, icons, etc.)
+└── README.md         # Project documentation
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/kirankumark-sec/yotrixx-web.git
+cd yotrixx-web
+```
+
+### 2. Run Locally
+
+Just open the file in your browser:
+
+```bash
+open index.html
+```
+
+or double-click the file.
+
+---
+
+## 📸 Key Highlights
+
+* ⚡ High-performance animations without frameworks
+* 🎯 Designed for **education platforms / startups**
+* 💼 Portfolio-ready UI
+* 📱 Fully responsive
+
+---
+
+## 🔧 Customization
+
+You can easily modify:
+
+* 🎨 Colors → CSS variables (`:root`)
+* 📚 Courses → Update course cards
+* 📞 Contact → Replace Google Form link
+* 📱 WhatsApp → Update number in:
+
+```html
+https://wa.me/91XXXXXXXXXX
+```
+
+---
+
+## 📈 Future Improvements
+
+* Backend integration (Node.js / Django)
+* User authentication system
+* Course dashboard
+* Payment gateway integration
+* CMS for dynamic content
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome!
+For major changes, open an issue first to discuss what you'd like to improve.
+
+---
+
+## 📄 License
+
+This project is open-source and available under the **MIT License**.
+
+---
+
+## 👨‍💻 Author
+
+**Kiran Kumar K**
+
+* Cybersecurity Enthusiast 🔐
+* Developer 💻
+* UI/UX Explorer 🎨
+
