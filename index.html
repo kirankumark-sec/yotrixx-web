@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -22,6 +22,7 @@
   --parch:    #ddd0b5;
   --sand:     #d8cdb5;
   --linen:    #e8ddc8;
+  --black:    #000000;
 
   /* Deep rich browns */
   --espresso: #1e0f08;
@@ -129,6 +130,7 @@ a{text-decoration:none;color:inherit}
 .hero{height:100vh;min-height:700px;display:grid;grid-template-columns:52% 48%;position:relative;overflow:hidden}
 
 /* left */
+.hero-b{display:flex;flex-direction:column;justify-content:center;padding:0 68px;position:relative;z-index:2;background:var(--black)}
 .hero-l{display:flex;flex-direction:column;justify-content:center;padding:0 68px;position:relative;z-index:2;background:var(--cream)}
 .hero-l::after{content:"";position:absolute;right:0;top:10%;bottom:10%;width:1px;background:linear-gradient(to bottom,transparent,var(--border2),transparent)}
 .h-ey{font-family:var(--FM);font-size:8.5px;letter-spacing:.55em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:10px;margin-bottom:28px;opacity:0;animation:fadeUp .8s ease 2.8s forwards}
