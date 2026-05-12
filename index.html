@@ -477,6 +477,14 @@ footer{background:var(--ink);padding:80px 64px 40px;border-top:1px solid rgba(12
   .arch-btns{flex-direction:column;align-items:center}
   .arch-btn{width:100%;max-width:300px;justify-content:center}
 }
+/* ─── BROCHURE STEPS ─── */
+.broch-steps{display:flex;flex-direction:column;gap:14px;margin-bottom:20px}
+.broch-step{display:flex;align-items:flex-start;gap:14px}
+.broch-num{width:30px;height:30px;min-width:30px;border-radius:50%;background:linear-gradient(135deg,var(--p3),var(--p2));color:#fff;font-family:var(--FB);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(91,33,182,.28)}
+.broch-txt{font-size:13.5px;color:var(--muted);line-height:1.55;padding-top:6px}
+.broch-list{list-style:none;padding:0;margin:0 0 20px;display:flex;flex-direction:column;gap:9px}
+.broch-list li{font-size:13px;color:var(--ink);display:flex;align-items:center;gap:10px}
+.broch-check{width:20px;height:20px;min-width:20px;border-radius:50%;background:linear-gradient(135deg,#10B981,#059669);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(16,185,129,.25)}
 </style>
 </head>
 <body>
@@ -542,58 +550,38 @@ footer{background:var(--ink);padding:80px 64px 40px;border-top:1px solid rgba(12
     </div>
   </div>
 
-  <!-- HERO FORM CARD -->
+  <!-- HERO BROCHURE CARD -->
   <div class="hero-r" id="hero-card">
-    <div class="form-head" id="fh-head">
-      <div class="form-title">Download the Course Syllabus</div>
-      <div class="form-sub">Program Duration · 6 Months · Live Online</div>
+    <div class="form-head">
+      <div class="form-title">Download the Course Brochure</div>
+      <div class="form-sub">Fill the quick Google Form · Get your link instantly</div>
     </div>
-    <div class="form-body" id="fh-body">
-      <div class="f-group"><label class="f-label">Full Name *</label><input class="f-input" id="fh-name" type="text" placeholder="Your full name"></div>
-      <div class="f-row">
-        <div class="f-group"><label class="f-label">Phone / WhatsApp *</label><input class="f-input" id="fh-phone" type="tel" placeholder="+91 00000 00000"></div>
-        <div class="f-group"><label class="f-label">Email *</label><input class="f-input" id="fh-email" type="email" placeholder="you@email.com"></div>
+    <div class="form-body">
+      <div class="broch-steps">
+        <div class="broch-step">
+          <div class="broch-num">1</div>
+          <div class="broch-txt">Click the button below to open our Google Form</div>
+        </div>
+        <div class="broch-step">
+          <div class="broch-num">2</div>
+          <div class="broch-txt">Fill in your basic details — takes under 60 seconds</div>
+        </div>
+        <div class="broch-step">
+          <div class="broch-num">3</div>
+          <div class="broch-txt">Receive your brochure download link instantly</div>
+        </div>
       </div>
-      <div class="f-group"><label class="f-label">City / Location *</label><input class="f-input" id="fh-city" type="text" placeholder="Your city"></div>
-      <div class="f-group">
-        <label class="f-label">Interested Course *</label>
-        <select class="f-select" id="fh-course">
-          <option value="" disabled selected>Select course</option>
-          <option value="SketchUp Mastery">SketchUp Mastery</option>
-          <option value="Lumion Rendering">Lumion Rendering</option>
-          <option value="Architecture & Interior Design">Architecture &amp; Interior Design</option>
-          <option value="Construction Knowledge">Construction Knowledge</option>
-        </select>
-      </div>
-      <div class="f-group">
-        <label class="f-label">Your Background *</label>
-        <select class="f-select" id="fh-bg">
-          <option value="" disabled selected>Select background</option>
-          <option value="Student">Student</option>
-          <option value="Architecture Student">Architecture Student</option>
-          <option value="Interior Designer">Interior Designer</option>
-          <option value="Civil Engineer">Civil Engineer</option>
-          <option value="Freelancer">Freelancer</option>
-          <option value="Working Professional">Working Professional</option>
-        </select>
-      </div>
-      <div class="f-check-row">
-        <input type="checkbox" class="f-checkbox" id="fh-consent" checked>
-        <label class="f-check-text" for="fh-consent">I agree to be contacted by Yotrixx regarding courses, updates, and offers. <a href="#">Privacy Policy</a></label>
-      </div>
-      <button class="f-submit" id="fh-submit">
+      <ul class="broch-list">
+        <li><span class="broch-check">✓</span> Full curriculum &amp; module breakdown</li>
+        <li><span class="broch-check">✓</span> Confirmed pricing &amp; batch schedule</li>
+        <li><span class="broch-check">✓</span> Career outcomes &amp; placement insights</li>
+        <li><span class="broch-check">✓</span> 100% free — zero obligation</li>
+      </ul>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfImVX_KPEJ8VdVQxF0y3BfFyi21zCSwnp7nbnOcyJbP7CE3Q/viewform?usp=send_form" target="_blank" class="f-submit" style="text-decoration:none;cursor:pointer">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-        Download Syllabus
-      </button>
-    </div>
-    <div class="form-success" id="fh-success">
-      <div class="succ-icon">✓</div>
-      <div class="succ-title">Syllabus on its Way!</div>
-      <div class="succ-sub">Thank you! Our team at education@yotrixx.com will reach out within 24 hours. Your download starts automatically:</div>
-      <a href="https://drive.google.com/uc?export=download&id=1V9-GINkPC-goGQGn0gXQY-MCkYxNztbk" class="succ-dl" target="_blank" download>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-        Download Brochure PDF
+        Get the Brochure — Fill Form
       </a>
+      <p style="font-size:11px;color:var(--muted);text-align:center;margin:0;line-height:1.6">Opens Google Form in a new tab · Download link sent on submission</p>
     </div>
   </div>
 </section>
@@ -836,7 +824,7 @@ footer{background:var(--ink);padding:80px 64px 40px;border-top:1px solid rgba(12
     <div>
       <div class="sec-lbl rv">Enroll Today</div>
       <h2 class="cl-title rv" style="transition-delay:.08s">Start Your <em>Design</em> Journey.</h2>
-      <p class="cl-desc rv" style="transition-delay:.14s">Fill out the form for full course details, pricing, and enrollment guidance. Our team responds within 24 hours. Prefer instant conversation? WhatsApp works great.</p>
+      <p class="cl-desc rv" style="transition-delay:.14s">Get our free brochure with full course details, pricing, and batch schedule — just fill out the quick Google Form. Prefer instant conversation? WhatsApp works great.</p>
       <div class="cl-infos rv" style="transition-delay:.20s">
         <div class="ci"><div class="ci-ico">📍</div><div><div class="ci-lbl">Platform</div><div class="ci-val">Online · Learn from anywhere in India</div></div></div>
         <div class="ci"><div class="ci-ico">⚡</div><div><div class="ci-lbl">Response Time</div><div class="ci-val">Within 24 hours · Usually same day</div></div></div>
@@ -849,58 +837,39 @@ footer{background:var(--ink);padding:80px 64px 40px;border-top:1px solid rgba(12
       </a>
     </div>
 
-    <!-- CONTACT FORM — submits to Google Form silently -->
+    <!-- CONTACT — Google Form brochure CTA -->
     <div class="cr rvr">
       <div class="cr-head">
-        <div class="crh-title">Enrollment &amp; Enquiry Form</div>
-        <div class="crh-sub">Get full course details, pricing &amp; batch schedule within 24 hours</div>
+        <div class="crh-title">Get Your Free Course Brochure</div>
+        <div class="crh-sub">Fill the quick Google Form · Download link sent instantly</div>
       </div>
-      <div class="cr-body" id="cr-body">
-        <input class="cr-input" id="cr-name" type="text" placeholder="Full Name *">
-        <input class="cr-input" id="cr-email" type="email" placeholder="Email Address *">
-        <input class="cr-input" id="cr-phone" type="tel" placeholder="Phone / WhatsApp Number *">
-        <input class="cr-input" id="cr-city" type="text" placeholder="City / Location *">
-        <select class="cr-input" id="cr-course" style="cursor:pointer;appearance:none">
-          <option value="" disabled selected>Which course are you interested in?</option>
-          <option value="SketchUp Mastery">SketchUp Mastery</option>
-          <option value="Lumion Rendering">Lumion Rendering</option>
-          <option value="Architecture & Interior Design">Architecture &amp; Interior Design</option>
-          <option value="Construction Knowledge">Construction Knowledge</option>
-        </select>
-        <select class="cr-input" id="cr-level" style="cursor:pointer;appearance:none">
-          <option value="" disabled selected>Your current level in design?</option>
-          <option value="Beginner (No experience)">Beginner (No experience)</option>
-          <option value="Basic (Learning / Student)">Basic (Learning / Student)</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Professional">Professional</option>
-        </select>
-        <select class="cr-input" id="cr-bg" style="cursor:pointer;appearance:none">
-          <option value="" disabled selected>Your Background</option>
-          <option value="Student">Student</option>
-          <option value="Architecture Student">Architecture Student</option>
-          <option value="Interior Designer">Interior Designer</option>
-          <option value="Civil Engineer">Civil Engineer</option>
-          <option value="Freelancer">Freelancer</option>
-          <option value="Working Professional">Working Professional</option>
-        </select>
-        <select class="cr-input" id="cr-contact" style="cursor:pointer;appearance:none">
-          <option value="" disabled selected>How should we contact you?</option>
-          <option value="WhatsApp">WhatsApp</option>
-          <option value="Email">Email</option>
-          <option value="Call">Call</option>
-        </select>
-        <div class="cr-check-row">
-          <input type="checkbox" class="cr-checkbox" id="cr-consent" checked>
-          <label class="cr-check-text" for="cr-consent">I agree to be contacted by Yotrixx regarding courses, updates, and offers.</label>
+      <div class="cr-body">
+        <div class="broch-steps">
+          <div class="broch-step">
+            <div class="broch-num">1</div>
+            <div class="broch-txt">Click the button below to open our Google Form</div>
+          </div>
+          <div class="broch-step">
+            <div class="broch-num">2</div>
+            <div class="broch-txt">Fill in your basic details — takes under 60 seconds</div>
+          </div>
+          <div class="broch-step">
+            <div class="broch-num">3</div>
+            <div class="broch-txt">Receive your brochure download link instantly</div>
+          </div>
         </div>
-        <button class="cr-btn" id="cr-submit">Send Enrollment Request →</button>
+        <ul class="broch-list">
+          <li><span class="broch-check">✓</span> Full curriculum &amp; module breakdown</li>
+          <li><span class="broch-check">✓</span> Confirmed pricing &amp; batch schedule</li>
+          <li><span class="broch-check">✓</span> Career outcomes &amp; placement insights</li>
+          <li><span class="broch-check">✓</span> 100% free — zero obligation</li>
+        </ul>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfImVX_KPEJ8VdVQxF0y3BfFyi21zCSwnp7nbnOcyJbP7CE3Q/viewform?usp=send_form" target="_blank" class="cr-btn" style="text-decoration:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Get the Brochure — Fill Form →
+        </a>
       </div>
-      <div class="cr-note" id="cr-note">✓ Free first consultation · No obligations · Response within 24 hours</div>
-      <div class="cr-success" id="cr-success">
-        <div class="cr-s-ico">✓</div>
-        <div class="cr-s-title">Request Received!</div>
-        <div class="cr-s-sub">Thank you! Our team at <strong>education@yotrixx.com</strong> has received your enrollment request and will get back to you within 24 hours.</div>
-      </div>
+      <div class="cr-note">Opens Google Form in a new tab · Download link sent on submission</div>
     </div>
   </div>
 </section>
@@ -927,9 +896,6 @@ footer{background:var(--ink);padding:80px 64px 40px;border-top:1px solid rgba(12
     <div class="ft-tagline">Design. Visualize. Build Your Future.</div>
   </div>
 </footer>
-
-<!-- HIDDEN GOOGLE FORM IFRAME (submits silently) -->
-<iframe id="gform-frame" name="gform-frame" style="display:none" title="Google Form"></iframe>
 
 <script>
 /* ─── CURSOR ─── */
@@ -997,124 +963,7 @@ track.addEventListener('mouseleave',()=>{isDown=false;track.style.cursor='grab';
 track.addEventListener('mouseup',()=>{isDown=false;track.style.cursor='grab';});
 track.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-track.offsetLeft;track.scrollLeft=scrollLeft-(x-startX)*1.5;});
 
-/* ─────────────────────────────────────────────────────
-   GOOGLE FORM PREFILL SUBMIT (SILENT — no redirect)
-   
-   Google Form entry IDs mapped from:
-   https://docs.google.com/forms/d/e/1FAIpQLSfAJb_3dlxUfBa-TWdWzSX-FVdtUiEKIRdO3BY8L7fVnRjiEQ/viewform
-   
-   entry.2005620554 = Name
-   entry.1045781291 = Email
-   entry.1166974658 = Phone
-   entry.1065046570 = City/Location
-   entry.505612927  = Course (radio/checkbox)
-   entry.839337160  = Level (radio)
-   entry.1074499108 = Background (radio)
-   entry.379454353  = Contact method (radio)
-   entry.1710534577 = Consent (checkbox)
-──────────────────────────────────────────────────── */
-const GF_BASE='https://docs.google.com/forms/d/e/1FAIpQLSfAJb_3dlxUfBa-TWdWzSX-FVdtUiEKIRdO3BY8L7fVnRjiEQ/formResponse';
 
-function buildGFormURL(data){
-  // Map our field names to Google Form entry IDs
-  const map={
-    name:'entry.2005620554',
-    email:'entry.1045781291',
-    phone:'entry.1166974658',
-    city:'entry.1065046570',
-    course:'entry.505612927',
-    level:'entry.839337160',
-    background:'entry.1074499108',
-    contact:'entry.379454353',
-    consent:'entry.1710534577'
-  };
-  const params=new URLSearchParams();
-  Object.entries(map).forEach(([k,entryId])=>{
-    if(data[k]) params.append(entryId, data[k]);
-  });
-  return GF_BASE+'?'+params.toString()+'&submit=Submit';
-}
-
-function submitToGoogleForm(data){
-  // Submit via hidden iframe — user never sees the Google Form
-  const frame=document.getElementById('gform-frame');
-  const form=document.createElement('form');
-  form.method='POST';
-  form.action=GF_BASE;
-  form.target='gform-frame';
-  form.style.display='none';
-
-  const entryMap={
-    name:'entry.2005620554',
-    email:'entry.1045781291',
-    phone:'entry.1166974658',
-    city:'entry.1065046570',
-    course:'entry.505612927',
-    level:'entry.839337160',
-    background:'entry.1074499108',
-    contact:'entry.379454353',
-    consent:'entry.1710534577'
-  };
-
-  Object.entries(entryMap).forEach(([k,entryId])=>{
-    if(data[k]){
-      const inp=document.createElement('input');
-      inp.type='hidden';inp.name=entryId;inp.value=data[k];
-      form.appendChild(inp);
-    }
-  });
-  document.body.appendChild(form);
-  form.submit();
-  setTimeout(()=>document.body.removeChild(form),2000);
-}
-
-/* ─── HERO FORM SUBMIT ─── */
-document.getElementById('fh-submit').addEventListener('click',async function(){
-  const name=document.getElementById('fh-name').value.trim();
-  const phone=document.getElementById('fh-phone').value.trim();
-  const email=document.getElementById('fh-email').value.trim();
-  const city=document.getElementById('fh-city').value.trim();
-  const course=document.getElementById('fh-course').value;
-  const bg=document.getElementById('fh-bg').value;
-  const consent=document.getElementById('fh-consent').checked;
-  if(!name||!email){alert('Please fill in your name and email.');return;}
-  this.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Sending...';
-  this.disabled=true;
-  // Submit to Google Form silently
-  submitToGoogleForm({name,email,phone,city,course,background:bg,consent:consent?'I agree to be contacted by Yotrixx regarding courses, updates, and offers.':''});
-  await new Promise(r=>setTimeout(r,1000));
-  // Show success + trigger download
-  document.getElementById('fh-head').classList.add('hide');
-  document.getElementById('fh-body').classList.add('hide');
-  document.getElementById('fh-success').classList.add('show');
-  setTimeout(()=>{
-    const a=document.createElement('a');
-    a.href='https://drive.google.com/uc?export=download&id=1V9-GINkPC-goGQGn0gXQY-MCkYxNztbk';
-    a.download='Yotrixx-Course-Brochure.pdf';
-    a.target='_blank';
-    document.body.appendChild(a);a.click();document.body.removeChild(a);
-  },600);
-});
-
-/* ─── CONTACT FORM SUBMIT ─── */
-document.getElementById('cr-submit').addEventListener('click',async function(){
-  const name=document.getElementById('cr-name').value.trim();
-  const email=document.getElementById('cr-email').value.trim();
-  const phone=document.getElementById('cr-phone').value.trim();
-  const city=document.getElementById('cr-city').value.trim();
-  const course=document.getElementById('cr-course').value;
-  const level=document.getElementById('cr-level').value;
-  const bg=document.getElementById('cr-bg').value;
-  const contact=document.getElementById('cr-contact').value;
-  const consent=document.getElementById('cr-consent').checked;
-  if(!name||!email||!phone){alert('Please fill in your name, email, and phone.');return;}
-  this.textContent='Sending...';this.disabled=true;
-  submitToGoogleForm({name,email,phone,city,course,level,background:bg,contact,consent:consent?'I agree to be contacted by Yotrixx regarding courses, updates, and offers.':''});
-  await new Promise(r=>setTimeout(r,1000));
-  document.getElementById('cr-body').classList.add('hide');
-  document.getElementById('cr-note').classList.add('hide');
-  document.getElementById('cr-success').classList.add('show');
-});
 </script>
 </body>
 </html>
