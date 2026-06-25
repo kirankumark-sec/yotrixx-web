@@ -166,6 +166,12 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
 .f-submit::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 20%,rgba(255,255,255,.18) 50%,transparent 80%);transform:translateX(-100%);transition:transform .5s}
 .f-submit:hover::before{transform:translateX(100%)}
 .f-submit:hover{transform:translateY(-2px);box-shadow:0 16px 48px rgba(91,33,182,.45)}
+.terms-agree{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:var(--muted);line-height:1.5;margin:2px 0 4px}
+.terms-agree input{width:17px;height:17px;accent-color:var(--p2);flex-shrink:0;margin-top:1px;cursor:pointer}
+.terms-agree a{color:var(--p2);font-weight:700;text-decoration:none}
+.terms-agree a:hover{text-decoration:underline}
+.gated-form-link.is-disabled{opacity:.55;filter:grayscale(.18);box-shadow:none!important}
+.gated-form-link.is-disabled:hover{transform:none!important}
 
 /* Form success */
 .form-success{display:none;flex-direction:column;align-items:center;padding:44px 34px;text-align:center;gap:16px}
@@ -535,7 +541,6 @@ footer{background:var(--ink);padding:80px 64px 40px;border-top:1px solid rgba(12
     <p class="h-sub">India's most practical, project-first architecture and design education. Learn SketchUp, Lumion, AutoCAD &amp; more — online, at your pace, with real mentorship.</p>
     <div class="h-certs">
       <span class="h-cert-lbl">Recognized by</span>
-      <div class="h-cert-item">✦ AUTODESK Certified</div>
       <div class="h-cert-item">📐 Industry Vetted</div>
       <div class="h-cert-item">🏆 Award Winning</div>
     </div>
@@ -580,7 +585,11 @@ footer{background:var(--ink);padding:80px 64px 40px;border-top:1px solid rgba(12
         <li><span class="broch-check">✓</span> Career outcomes &amp; placement insights</li>
         <li><span class="broch-check">✓</span> 100% free — zero obligation</li>
       </ul>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfImVX_KPEJ8VdVQxF0y3BfFyi21zCSwnp7nbnOcyJbP7CE3Q/viewform?usp=send_form" target="_blank" class="f-submit" style="text-decoration:none;cursor:pointer">
+      <label class="terms-agree">
+        <input type="checkbox" class="terms-check" aria-label="Agree to Terms and Conditions" required>
+        <span>I agree to the <a href="T&C.html" target="_blank">Terms &amp; Conditions</a></span>
+      </label>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfImVX_KPEJ8VdVQxF0y3BfFyi21zCSwnp7nbnOcyJbP7CE3Q/viewform?usp=send_form" target="_blank" class="f-submit gated-form-link is-disabled" aria-disabled="true" style="text-decoration:none;cursor:pointer">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
         Get the Brochure — Fill Form
       </a>
@@ -867,7 +876,11 @@ footer{background:var(--ink);padding:80px 64px 40px;border-top:1px solid rgba(12
           <li><span class="broch-check">✓</span> Career outcomes &amp; placement insights</li>
           <li><span class="broch-check">✓</span> 100% free — zero obligation</li>
         </ul>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfImVX_KPEJ8VdVQxF0y3BfFyi21zCSwnp7nbnOcyJbP7CE3Q/viewform?usp=send_form" target="_blank" class="cr-btn" style="text-decoration:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px">
+        <label class="terms-agree">
+          <input type="checkbox" class="terms-check" aria-label="Agree to Terms and Conditions" required>
+          <span>I agree to the <a href="T&C.html" target="_blank">Terms &amp; Conditions</a></span>
+        </label>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfImVX_KPEJ8VdVQxF0y3BfFyi21zCSwnp7nbnOcyJbP7CE3Q/viewform?usp=send_form" target="_blank" class="cr-btn gated-form-link is-disabled" aria-disabled="true" style="text-decoration:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
           Get the Brochure — Fill Form →
         </a>
@@ -907,7 +920,7 @@ let mx=window.innerWidth/2,my=window.innerHeight/2;
 let rx=mx,ry=my;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';},{passive:true});
 (function animRing(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(animRing)})();
-document.querySelectorAll('a,button,.wcard,.tcard,.pm,.step,.tc,.scard,.ci').forEach(el=>{
+document.querySelectorAll('a,button,input,label,.wcard,.tcard,.pm,.step,.tc,.scard,.ci').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('cur-hover'));
   el.addEventListener('mouseleave',()=>document.body.classList.remove('cur-hover'));
 });
@@ -957,6 +970,28 @@ const io=new IntersectionObserver(entries=>entries.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}
 }),{threshold:.08,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>io.observe(el));
+
+/* ─── TERMS GATED BROCHURE LINKS ─── */
+document.querySelectorAll('.gated-form-link').forEach(link=>{
+  const card=link.closest('.form-body,.cr-body');
+  const checkbox=card?.querySelector('.terms-check');
+  if(!checkbox)return;
+
+  const syncState=()=>{
+    link.classList.toggle('is-disabled',!checkbox.checked);
+    link.setAttribute('aria-disabled',String(!checkbox.checked));
+  };
+
+  checkbox.addEventListener('change',syncState);
+  link.addEventListener('click',e=>{
+    if(checkbox.checked)return;
+    e.preventDefault();
+    checkbox.focus();
+    checkbox.reportValidity?.();
+    alert('Please agree to the Terms & Conditions before opening the form.');
+  });
+  syncState();
+});
 
 /* ─── SHOWCASE DRAG SCROLL ─── */
 const track=document.getElementById('showcase-track');
