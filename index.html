@@ -68,7 +68,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
 #nav.stk{background:rgba(255,255,255,.92);backdrop-filter:blur(24px) saturate(1.8);border-bottom-color:rgba(124,58,237,.1);box-shadow:0 2px 24px rgba(91,33,182,.07)}
 .n-logo{font-family:var(--FH);font-size:26px;font-weight:700;color:var(--p3);letter-spacing:-.01em;display:flex;align-items:center;gap:10px;text-decoration:none}
 #nav:not(.stk) .n-logo{color:#fff}
-.n-logo-mark{width:34px;height:34px;border-radius:var(--r8);background:linear-gradient(135deg,var(--p2),var(--acc2));display:flex;align-items:center;justify-content:center;font-family:var(--FB);font-size:15px;font-weight:800;color:#fff;position:relative;overflow:hidden;flex-shrink:0}
+.n-logo-mark{width:34px;height:34px;border-radius:var(--r8);background:linear-gradient(135deg,var(--p2),var(--acc2));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;flex-shrink:0;padding:4px}
+.n-logo-mark img{width:100%;height:100%;object-fit:contain;display:block}
 .n-logo-mark::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.3) 50%,transparent 70%);transform:translateX(-100%);transition:transform .5s}
 .n-logo:hover .n-logo-mark::after{transform:translateX(100%)}
 .n-links{display:flex;align-items:center;gap:36px;list-style:none}
@@ -423,7 +424,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
 footer{background:var(--ink);padding:80px 64px 40px;border-top:1px solid rgba(124,58,237,.1)}
 .ft{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr;gap:56px;margin-bottom:56px;max-width:1400px;margin-left:auto;margin-right:auto}
 .ft-logo{font-family:var(--FH);font-size:26px;font-weight:700;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:10px}
-.ft-logo-mark{width:32px;height:32px;border-radius:var(--r8);background:linear-gradient(135deg,var(--p2),var(--acc2));display:flex;align-items:center;justify-content:center;font-family:var(--FB);font-size:14px;font-weight:800;color:#fff}
+.ft-logo-mark{width:32px;height:32px;border-radius:var(--r8);background:linear-gradient(135deg,var(--p2),var(--acc2));display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;padding:4px}
+.ft-logo-mark img{width:100%;height:100%;object-fit:contain;display:block}
 .ft-logo em{color:var(--acc2);font-style:italic}
 .ft-tag{font-size:13px;color:rgba(255,255,255,.25);line-height:1.85;max-width:260px;margin-bottom:28px;font-weight:300}
 .ft-soc{display:flex;gap:8px}
@@ -502,7 +504,7 @@ footer{background:var(--ink);padding:80px 64px 40px;border-top:1px solid rgba(12
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="n-logo"><div class="n-logo-mark">Y</div>Yotrixx</a>
+  <a href="#" class="n-logo"><div class="n-logo-mark"><img src="favicon1.png" alt="Yotrixx logo"></div>Yotrixx</a>
   <ul class="n-links">
     <li><a href="#program">Program</a></li>
     <li><a href="#how">How It Works</a></li>
@@ -894,7 +896,7 @@ footer{background:var(--ink);padding:80px 64px 40px;border-top:1px solid rgba(12
 <footer>
   <div class="ft">
     <div>
-      <div class="ft-logo"><div class="ft-logo-mark">Y</div>Yotri<em>xx</em></div>
+      <div class="ft-logo"><div class="ft-logo-mark"><img src="favicon1.png" alt="Yotrixx logo"></div>Yotri<em>xx</em></div>
       <p class="ft-tag">Design. Visualize. Build Your Future. India's most practical architecture &amp; design education platform.</p>
       <div class="ft-soc">
         <a href="#" class="fso">in</a>
